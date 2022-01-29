@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='viewport'
+    content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <title>Rodhian</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+
+  <section>
+    <div id="tambah_data_buku" class="container col-xl-10 col-xxl-8 px-4 py-5">
+      <div class="row align-items-center g-lg-5 pb-5">
+        <div class="col-md-6 mx-auto col-lg-5">
+          <p class="fs-4 fw-bold lh-4 mb-3 text-center">Aplikasi Pengelolaan Data </p>
+          <br>
+          <form class="p-4 p-md-5 border rounded-3 bg-light" id="inputBook">
+            <div class="mb-3">
+              <label for="Title">Title</label>
+              <input type="text" class="form-control mt-2" id="Title" placeholder="pemrograman web">
+            </div>
+            <div class="mb-3">
+              <label for="Author">Author</label>
+              <input type="text" class="form-control mt-2" id="Author" placeholder="M Rodhian Syabri">
+            </div>
+            <div class="mb-3">
+              <label for="Year">Year</label>
+              <input type="number" class="form-control mt-2" id="Year" placeholder="2022">
+            </div>
+            <input type="checkbox" class="mt-2" id="IsComplete" value="false" hidden>
+            <button class="w-100 btn btn-md btn-primary mt-lg-4" type="submit">Simpan Data Buku</button>
+          </form>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <!--hero-->
+          <div class="px-4 py-5 my-5 text-center mb-5" id="menu">
+            <img class="d-block mx-auto mb-4" src="assets/hero.jpg" alt="hero" width="230px">
+            <h1 class="display-5 fw-bold">Selamat Datang</h1>
+            <div class="mx-auto">
+              <p class="lead mb-4">Di Aplikasi Pengelolaan Data Menggunakan DOM dan Web Storage</p>
+              <p class="text-muted">Oleh : Muhammad Rodhian Syabri</p>
+              <hr>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a class="btn btn-outline-secondary btn-lg px-4" href="#rak_buku">Lihat Rak Buku</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="rak_buku">
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div style="margin: 16px 0;display: flex;flex-direction: column;align-items: center;">
+          <p class="fs-2 fw-bold lh-4 my-3">Katalog Peminjaman buku</p>
+          <br>
+          <div class="item-ilgn-center">
+            <form class="row g-2" id="searchBook">
+              <div class="col-auto">
+                <input id="searchBookTitle" type="text" class="form-control" placeholder="input judul buku">
+              </div>
+              <div class="col-auto">
+                <button id="searchSubmit" type="submit" class="btn btn-primary mb-3">Cari</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4" id="katalog_buku">
+        </div>
+      </div>
+    </div>
+  </section><br><br>
+
+  <section class="container marketing my-lg-4" id="rak_peminjaman">
+    <p class="fs-2 fw-bold lh-4 my-3 text-center">Rak Peminjaman Buku</p>
+    <br>
+    <div class="row">
+      <div class="col-md-6 shadow-lg p-3 mb-5 bg-white rounded px-lg-5">
+        <h5>Buku Belum Selesai Dibaca</h5>
+        <hr><br>
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Year</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="list_semua_data_book">
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6 shadow-lg p-3 mb-5 bg-white rounded  px-lg-5">
+        <h5>Buku Selesai Dibaca</h5>
+        <hr><br>
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Year</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="selesai_baca">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section><br><br>
+
+
+  <script>
+
+    let e = [];
+    function t(t) {
+      t.preventDefault();
+      const n = document.querySelector("#Title"),
+        o = document.querySelector("#Author"),
+        d = document.querySelector("#Year"),
+        i = document.querySelector("#IsComplete"),
+        c = { id: +new Date(), title: n.value, author: o.value, year: d.value, isComplete: i.checked };
+      console.log(c), e.push(c), document.dispatchEvent(new Event("bookChanged"));
+    }
+    function n(t) {
+      t.preventDefault();
+      const n = document.querySelector("#searchBookTitle");
+      (query = n.value),
+        query
+          ? c(
+            e.filter(function (e) {
+              return e.title.toLowerCase().includes(query.toLowerCase());
+            })
+          )
+          : c(e);
+    }
+    function selesai_baca(t) {
+      const n = Number(t.target.id),
+        o = e.findIndex(function (e) {
+          return e.id === n;
+        });
+      -1 !== o && ((e[o] = { ...e[o], isComplete: !0 }), document.dispatchEvent(new Event("bookChanged")));
+    }
+    function belum_selesai(t) {
+      const n = Number(t.target.id),
+        o = e.findIndex(function (e) {
+          return e.id === n;
+        });
+      -1 !== o && ((e[o] = { ...e[o], isComplete: !1 }), document.dispatchEvent(new Event("bookChanged")));
+    }
+    function hapus(t) {
+      var yakin = confirm("Apakah kamu yakin akan menghapus buku ini dari katalog peminjaman?");
+
+      if (yakin) {
+        const n = Number(t.target.id),
+          o = e.findIndex(function (e) {
+            return e.id === n;
+          });
+        -1 !== o && (e.splice(o, 1), document.dispatchEvent(new Event("bookChanged")));
+      }
+
+
+    }
+    function c(e) {
+      const t = document.querySelector("#list_semua_data_book"),
+        n = document.querySelector("#selesai_baca"),
+        z = document.querySelector("#katalog_buku");
+      (t.innerHTML = ""), (n.innerHTML = ""), (z.innerHTML = "");
+      for (const c of e) {
+
+        const gh = document.createElement("div");
+        gh.classList.add("col");
+        const gl = document.createElement("div");
+        gl.classList.add("card", "shadow-sm");
+        const gp = document.createElement("img");
+        gp.src = "assets/cover_buku.jpg";
+        const gz = document.createElement("div");
+        gz.classList.add("card-body");
+        const gb = document.createElement("small");
+        gb.classList.add("text-muted");
+        gb.innerText = c.author;
+        const ga = document.createElement("p");
+        ga.classList.add("card-text");
+        ga.innerText = c.title;
+        const gc = document.createElement("hr");
+        const gu = document.createElement("div");
+        gu.classList.add("d-flex", "justify-content-between", "align-items-center");
+        const gi = document.createElement("button");
+        (gi.id = c.id), (gi.innerText = "Hapus dari Rak"), gi.classList.add("btn", "btn-sm", "btn-outline-danger"), gi.addEventListener("click", hapus);
+        const gm = document.createElement("small");
+        gm.classList.add("text-muted");
+        gm.innerText = c.year;
+        gh.appendChild(gl), gl.appendChild(gp), gl.appendChild(gz), gz.appendChild(gb), gz.appendChild(ga), gz.appendChild(gc), gz.appendChild(gu), gu.appendChild(gi), gu.appendChild(gm), z.appendChild(gh);
+
+        const e = document.createElement("tr");
+        const a = document.createElement("td");
+        a.innerText = c.title;
+        const u = document.createElement("td");
+        u.innerText = c.author;
+        const r = document.createElement("td");
+
+        if (((r.innerText = c.year), e.appendChild(a), e.appendChild(u), e.appendChild(r), c.isComplete)) {
+          const t = document.createElement("td");
+          t.classList.add("text-center");
+          const o = document.createElement("button");
+          (o.id = c.id), (o.innerText = "Belum Selesai dibaca"), o.classList.add("btn", "btn-sm", "btn-outline-warning", "text-dark"), o.addEventListener("click", belum_selesai);
+          t.appendChild(o), e.appendChild(t), n.appendChild(e);
+        } else {
+          const n = document.createElement("td");
+          n.classList.add("text-center");
+          const d = document.createElement("button");
+          (d.id = c.id), (d.innerText = "Selesai dibaca"), d.classList.add("btn", "btn-sm", "btn-outline-warning", "text-dark"), d.addEventListener("click", selesai_baca);
+          n.appendChild(d), e.appendChild(n), t.appendChild(e);
+        }
+      }
+    }
+    function a() {
+      !(function (e) {
+        localStorage.setItem("books", JSON.stringify(e));
+      })(e),
+        c(e);
+    }
+    window.addEventListener("load", function () {
+      (e = JSON.parse(localStorage.getItem("books")) || []), c(e);
+      const o = document.querySelector("#inputBook"),
+        d = document.querySelector("#searchBook");
+      o.addEventListener("submit", t), d.addEventListener("submit", n), document.addEventListener("bookChanged", a);
+    });
+
+  </script>
+</body>
+
+</html>
